@@ -28,7 +28,18 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Criação do item
+        $item = Item::create($validatedData);
+
+        // Retorno do item criado com status HTTP 201 (Created)
+        return response()->json($item, 201);
     }
 
     /**
@@ -36,7 +47,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return response()->json($item);
     }
 
     /**
