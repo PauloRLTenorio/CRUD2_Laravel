@@ -12,7 +12,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return response()->json(Item::all());
+        return response()->json(Item::paginate(10));
     }
 
     /**
