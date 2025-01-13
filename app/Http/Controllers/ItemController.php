@@ -63,7 +63,18 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Atualiza o item
+        $item->update($validatedData);
+
+        // Retorna o item atualizado
+        return response()->json($item);
     }
 
     /**
@@ -71,6 +82,10 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        // Deleta o item
+        $item->delete();
+
+        // Retorna uma resposta de sucesso
+        return response()->json(['message' => 'Item deletado com sucesso']);
     }
 }
